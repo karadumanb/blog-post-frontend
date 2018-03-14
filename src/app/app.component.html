@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+
+    <div class="blogs" *ngIf="blogsList">
+      <table class="table">
+        <thead class="h">
+          <tr class="h">
+            <th class="h">Title</th>
+            <th class="h">Description</th>
+            <th class="h">Date</th>
+            <th class="h">Status</th>
+            <th class="h">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="blog" (dblclick)="editBlog(blog)" *ngFor="let blog of blogsList">
+
+            <ng-container *ngIf="!editBlogs.includes(blog); else editTD">
+              <td>{{blog.title}}</td>
+              <td>{{blog.description}}</td>
+              <td>{{blog.date | date}}</td>
+              <td>{{blog.status}}</td>
+            </ng-container>
+
+            <ng-template #editTD>
+                <td><input type="text" name="title" id="title" (keypress)="submitBlog($event, blog)" [(ngModel)]="blog.title" placeholder="Title" class="form-control"></td>
+                <td><input type="text" name="description" id="description" (keypress)="submitBlog($event, blog)" [(ngModel)]="blog.description" placeholder="Description"
+                    class="form-control"></td>
+                <td>{{blog.date | date}}</td>
+                <td>
+                  <input type="text" name="status" id="status" (keypress)="submitBlog($event, blog)" [(ngModel)]="blog.status" placeholder="Status" class="form-control">
+                </td>
+            </ng-template>
+
+            <td class="o">
+              <button class="btn btn-success" (click)="doneBlog(blog)">
+                <i  class="fa fa-check"></i>
+              </button>
+              <button class="btn btn-primary" (click)="editBlog(blog)">
+                  <i  class="fa fa-pencil"></i>
+                </button>
+              <button class="btn btn-danger" (click)="deleteBlog(blog)">
+                  <i  class="fa fa-trash"></i>
+                </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <form>
+      <div class="form-row">
+
+        <div class="col-md-5">
+          <input type="text" name="title" id="title" [(ngModel)]="newBlog.title" placeholder="Title" class="form-control">
+        </div>
+        <div class="col-md-5">
+          <input name="description" id="description" [(ngModel)]="newBlog.description" placeholder="Description" class="form-control"
+            id="description">
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary" (click)="create()">Add</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-2">
+    
+  </div>
+</div>
